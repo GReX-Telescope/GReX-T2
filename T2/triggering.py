@@ -4,8 +4,8 @@
 import json
 import os.path
 
-#import dsacalib.constants as ct
-#import dsautils.cnf as cnf
+# import dsacalib.constants as ct
+# import dsautils.cnf as cnf
 
 # from sklearn import cluster  # for dbscan
 import hdbscan
@@ -17,7 +17,8 @@ from astropy.coordinates import ITRS, EarthLocation, SkyCoord
 from astropy.io import ascii
 from astropy.io.ascii.core import InconsistentTableError
 from astropy.time import Time
-#from dsautils import coordinates, dsa_store
+
+# from dsautils import coordinates, dsa_store
 from progress.bar import Bar
 
 from T2 import cluster_heimdall
@@ -26,9 +27,8 @@ from T2 import cluster_heimdall
 # import dsautils.dsa_syslog as dsl
 
 import logging as logger
-logger.basicConfig(filename='logs/output.log', 
-                    encoding='utf-8', 
-                    level=logger.DEBUG)
+
+logger.basicConfig(filename="logs/output.log", encoding="utf-8", level=logger.DEBUG)
 
 # logger = dsl.DsaSyslogger()
 # logger.subsystem("software")
@@ -73,17 +73,13 @@ def parse_catalog(catalog):
         for i in np.arange(1, len(lines)):
             try:
                 ra, dec, minsnr = lines[i].split()
-                c = SkyCoord(
-                    ra=ra, dec=dec, unit=(u.hourangle, u.deg), frame="icrs"
-                )
+                c = SkyCoord(ra=ra, dec=dec, unit=(u.hourangle, u.deg), frame="icrs")
                 coords.append(c)
                 snrs.append(float(minsnr))
             except:
                 print("")
     else:
-        logger.warning(
-            "No catalog found. Will not filter output based on a catalog."
-        )
+        logger.warning("No catalog found. Will not filter output based on a catalog.")
         print("No catalog found. Will not filter output based on a catalog.")
 
     return coords, snrs
@@ -369,9 +365,7 @@ def beams_coord(
     local_ha = ct.OVRO_LON * u.rad - c_ITRS.spherical.lon
     HA_src = local_ha.deg + 360.0
     RA_pt = (
-        t.sidereal_time(
-            "apparent", longitude=ct.OVRO_LON * (180.0 / np.pi) * u.deg
-        )
+        t.sidereal_time("apparent", longitude=ct.OVRO_LON * (180.0 / np.pi) * u.deg)
     ).deg
     coord_pt = SkyCoord(ra=RA_pt * u.deg, dec=Dec * u.deg, frame="icrs")
     w = coordinates.create_WCS(coord_pt, (theta[1] - theta[0]) / 60.0)
@@ -454,9 +448,7 @@ def primary_beams_coord(
     local_ha = ct.OVRO_LON * u.rad - c_ITRS.spherical.lon
     HA_src = local_ha.deg + 360.0
     RA_pt = (
-        t.sidereal_time(
-            "apparent", longitude=ct.OVRO_LON * (180.0 / np.pi) * u.deg
-        )
+        t.sidereal_time("apparent", longitude=ct.OVRO_LON * (180.0 / np.pi) * u.deg)
     ).deg
     coord_pt = SkyCoord(ra=RA_pt * u.deg, dec=Dec * u.deg, frame="icrs")
 
@@ -553,7 +545,5 @@ def check_clustered_sources(tab, coords, snrs, beam_model=None, do_check=True):
 
     tab_out = tab[is_not_src]
 
-    print(
-        f"Filtering from {len(tab)} to {len(tab_out)} candidates (source check)."
-    )
+    print(f"Filtering from {len(tab)} to {len(tab_out)} candidates (source check).")
     return tab_out

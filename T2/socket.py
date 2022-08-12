@@ -12,14 +12,15 @@ import datetime
 import time
 
 from astropy.time import Time
-#from dsautils import cnf, dsa_store, dsa_syslog
-#from etcd3.exceptions import ConnectionFailedError
-#from event import names
 
-#ds = dsa_store.DsaStore()
-#logger = dsa_syslog.DsaSyslogger()
-#logger.subsystem("software")
-#logger.app("T2")
+# from dsautils import cnf, dsa_store, dsa_syslog
+# from etcd3.exceptions import ConnectionFailedError
+# from event import names
+
+# ds = dsa_store.DsaStore()
+# logger = dsa_syslog.DsaSyslogger()
+# logger.subsystem("software")
+# logger.app("T2")
 # my_cnf = cnf.Conf(use_etcd=True)
 # try:
 #     t2_cnf = my_cnf.get("t2")
@@ -34,9 +35,8 @@ from astropy.time import Time
 from collections import deque
 
 import logging as logger
-logger.basicConfig(filename='logs/output.log', 
-                    encoding='utf-8', 
-                    level=logger.DEBUG)
+
+logger.basicConfig(filename="logs/output.log", encoding="utf-8", level=logger.DEBUG)
 
 nbeams_queue = deque(maxlen=10)
 
@@ -68,7 +68,7 @@ def parse_socket(
 
     assert isinstance(ports, list)
 
-    lastname = 'blank4now'#names.get_lastname()
+    lastname = "blank4now"  # names.get_lastname()
 
     ss = []
 
@@ -164,7 +164,7 @@ def parse_socket(
             gulp_status(2)
             continue
         else:
-            pass 
+            pass
             # ds.put_dict(
             #     "/mon/service/T2gulp",
             #     {"cadence": 60, "time": Time(datetime.datetime.utcnow()).mjd},
@@ -234,13 +234,9 @@ def cluster_and_plot(
     min_dm = t2_cnf["min_dm"]  # smallest dm in filtering
     max_ibox = t2_cnf["max_ibox"]  # largest ibox in filtering
     min_snr = t2_cnf["min_snr"]  # smallest snr in filtering
-    min_snr_t2out = t2_cnf[
-        "min_snr_t2out"
-    ]  # smallest snr to write T2 output cand file
+    min_snr_t2out = t2_cnf["min_snr_t2out"]  # smallest snr to write T2 output cand file
     if max_ncl is None:
-        max_ncl = t2_cnf[
-            "max_ncl"
-        ]  # largest number of clusters allowed in triggering
+        max_ncl = t2_cnf["max_ncl"]  # largest number of clusters allowed in triggering
     max_cntb0 = t2_cnf["max_ctb0"]
     max_cntb = t2_cnf["max_ctb"]
     target_params = (50.0, 100.0, 20.0)  # Galactic bursts
@@ -273,7 +269,7 @@ def cluster_and_plot(
     ibox64_filter = False
     if len(tab2):
         ibox64_cnt = np.sum(tab2["ibox"] == 64) / float(len(tab2["ibox"]))
-#        print("here", ibox64_cnt, tab2["ibox"])
+        #        print("here", ibox64_cnt, tab2["ibox"])
         if ibox64_cnt > 0.85 and len(tab2["ibox"]) > 15:
             ibox64_filter = True
             print("ibox64 filter")
