@@ -4,7 +4,8 @@ __pycache__
 */__pycache__
 tests/*.cand
 tests/*.json
+tests/*.pdf
 *.json
 *.log
 RELEASE-VERSION
-dsa110_T2.egg-info
+*.egg-info
