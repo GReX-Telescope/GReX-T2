@@ -15,8 +15,6 @@ def main(trigger=True, args=sys.argv):
     min_snr = float(args[3])
     min_snr_t2out = float(args[4])
     
-    print(f'min_dm: {min_dm},   max_ibox: {max_ibox},   min_snr: {min_snr},   min_snr_t2out: {min_snr_t2out}')
-    
     # Use roughly 8 seconds as a gulp size
     gulpsize = 16384 * 8
 
