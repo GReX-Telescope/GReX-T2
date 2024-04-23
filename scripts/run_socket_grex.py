@@ -9,7 +9,14 @@ logger.basicConfig(filename="output.log", encoding="utf-8", level=logger.DEBUG)
 HOST = "127.0.0.1"
 PORT = 12345
 
-def main(trigger=True):
+def main(trigger=True, args=sys.argv):
+    min_dm = float(args[1])
+    max_ibox = float(args[2])
+    min_snr = float(args[3])
+    min_snr_t2out = float(args[4])
+    
+    print(f'min_dm: {min_dm},   max_ibox: {max_ibox},   min_snr: {min_snr},   min_snr_t2out: {min_snr_t2out}')
+    
     # Use roughly 8 seconds as a gulp size
     gulpsize = 16384 * 8
 
@@ -50,9 +57,8 @@ def main(trigger=True):
         print("Number of candidates %d" % cand_count)
 
         if cand_count > 0:
-            print("Filtering", "last trig was ", last_trigger_time
-            last_trigger_time = socket_grex.filter_candidates(candstr_list, trigger=trigger, 
-                                          last_trigger_time=last_trigger_time)
+            print("Filtering", "last trig was ", last_trigger_time)
+            last_trigger_time = socket_grex.filter_candidates(candstr_list, trigger=trigger, last_trigger_time=last_trigger_time, min_dm=min_dm, max_ibox=max_ibox, min_snr=min_snr, min_snr_t2out=min_snr_t2out)
             print("Finished filtering")
             
         continue
