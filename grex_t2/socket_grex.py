@@ -12,7 +12,7 @@ logger.basicConfig(filename="output.log", encoding="utf-8", level=logger.DEBUG)
 
 nbeams_queue = deque(maxlen=10)
 
-def filter_candidates(candsfile, output=True, trigger=True, last_trigger_time=0.0):
+def filter_candidates(candsfile, output=True, trigger=True, last_trigger_time=0.0, min_dm=50, max_ibox=64, min_snr=12.5, min_snr_t2out=15.0):
     """Take a single gulp of candidates,
     parse, cluster, and then filter to
     produce highest S/N candidate and save
@@ -21,10 +21,6 @@ def filter_candidates(candsfile, output=True, trigger=True, last_trigger_time=0.
     outroot = "/hdd/data/candidates/T2/"
 
     col_heimdall = ["snr", "if", "itime", "mjds", "ibox", "idm", "dm", "ibeam"]
-    min_dm = 50
-    max_ibox = 64
-    min_snr = 12.5
-    min_snr_t2out = 15.0
     max_ncl = np.inf
     max_cntb = np.inf
     max_cntb0 = np.inf
