@@ -460,12 +460,13 @@ def send_trigger(output_dict=None, outputfile=None):
         logger.info(
             f"Sending trigger for candidate {candname} with specnum {val['specnum']}"
         )
+        trigger_info = {"key": candname, "spectrum": val['spectrum']}
+        trigger_message = json.dumps(trigger_info).encode('utf-8')
+        
         UDP_PORT = 65432
         UDP_IP = "127.0.0.1"
-#        MESSAGE = b"{candname_str}"
-        MESSAGE = bytes(candname, 'utf8')
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # Internet  # UDP
-        sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
+        sock.sendto(trigger_message, (UDP_IP, UDP_PORT))
 
 
 def dump_cluster_results_heimdall(tab, outputfile, 
